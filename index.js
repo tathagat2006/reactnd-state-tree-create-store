@@ -7,10 +7,22 @@ function createStore() {
 
 
     let state 
+    let listeners = []
+
+    const subscribe = (listener) => {
+        listeners.push(listener)
+    }
 
     const getState = () => state
     
     return {
-        getState
+        getState,
+        subscribe
     }
 }
+
+const store = createStore()
+
+store.subscribe(() => {
+    console.log('The user updated the state')
+})
