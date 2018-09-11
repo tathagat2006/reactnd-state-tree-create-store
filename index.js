@@ -1,3 +1,8 @@
+// Application data is stored outisde the app and is just referenced by the app. i.e. all the data is stored outside the ui,
+// and is just referenced by the ui.
+//state tree will be depicted by TRIANGLE
+//main goal that Redux is trying to offer is predictable state management
+
 function createStore() {
     //The store should have four parts.
     //1.The state
