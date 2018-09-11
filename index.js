@@ -3,6 +3,7 @@
 //state tree will be depicted by TRIANGLE
 //main goal that Redux is trying to offer is predictable state management
 
+
 function createStore() {
     //The store should have four parts.
     //1.The state
