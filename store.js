@@ -30,6 +30,9 @@ store.subscribe(() => {
     console.log('The new state is: ', store.getState())
 })
 
+store.subscribe(() => {
+    console.log('The state changed')
+})
 
 // $('button').click(function(){
 //     console.log("One");
