@@ -6,9 +6,43 @@
 //A WAY TO LISTEN AND RESPOND TO THE STATE CHANGING
 //A WAY TO UPDATE THE STATE
 
+
+// function reducer(state = [] , action) {
+//     if(action.type === 'ADD_TODO') {
+//         return state.concat([action.todo])
+//     }
+
+//     return state;
+// }
+
+function appReducer(state, action) {
+    if(action.type === 'DELETE_FLAVOR') {
+    //    let idx = state.map(function (item) {return item.flavour;}).indexOf(action.flavor)
+    let res = state.filter(item => item.flavor !== action.flavor)
+
+        // return state.splice(idx,1)
+        return res
+    }
+    
+    return state;
+}
+
+var action = { type: 'DELETE_FLAVOR', flavor: 'Vanilla' }
+var state = [
+    { flavor: 'Chocolate', count: 36 }, 
+    { flavor: 'Vanilla', count: 210 }, 
+    { flavor: 'Apple', count: 30 },
+    { flavor: 'Mango', count: 21 }
+]
+
 function createStore() {
 
-    let state = {};
+    // var state = [
+    //     { flavor: 'Chocolate', count: 36 }, 
+    //     { flavor: 'Vanilla', count: 210 }, 
+    //     { flavor: 'Apple', count: 30 },
+    //     { flavor: 'Mango', count: 21 }
+    // ]
     let listeners = [];
 
     const subscribe = (listener) => {
@@ -24,15 +58,18 @@ function createStore() {
     }
 }
 
-const store = createStore();
-store.getState();
-store.subscribe(() => {
-    console.log('The new state is: ', store.getState())
-})
+var res1 = appReducer(state,action);
+console.log(res1)
 
-store.subscribe(() => {
-    console.log('The state changed')
-})
+// const store = createStore();
+// store.getState();
+// store.subscribe(() => {
+//     console.log('The new state is: ', store.getState())
+// })
+
+// store.subscribe(() => {
+//     console.log('The state changed')
+// })
 
 // $('button').click(function(){
 //     console.log("One");
