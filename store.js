@@ -18,6 +18,7 @@
 function appReducer(state, action) {
     if(action.type === 'DELETE_FLAVOR') {
     //    let idx = state.map(function (item) {return item.flavour;}).indexOf(action.flavor)
+    let res = state.filter((item) => { return item.flavor !== action.flavor})
     let res = state.filter(item => item.flavor !== action.flavor)
 
         // return state.splice(idx,1)
