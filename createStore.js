@@ -31,13 +31,20 @@ function createStore (reducer) {
   }
   
   // App Code
+
+  var ADD_TODO  ='ADD_TODO'
+  var REMOVE_TODO  ='REMOVE_TODO'
+  var TOGGLE_TODO  ='TOGGLE_TODO'
+  var ADD_GOAL  ='ADD_GOAL'
+  var REMOVE_GOAL  ='REMOVE_GOAL'
+
   function todos (state = [], action) {
     switch(action.type) {
-      case 'ADD_TODO' :
+      case ADD_TODO :
         return state.concat([action.todo])
-      case 'REMOVE_TODO' :
+      case REMOVE_TODO :
         return state.filter((todo) => todo.id !== action.id)
-      case 'TOGGLE_TODO' :
+      case TOGGLE_TODO :
         return state.map((todo) => todo.id !== action.id ? todo :
           Object.assign({}, todo, { complete: !todo.complete }))
       default :
@@ -47,9 +54,9 @@ function createStore (reducer) {
   
   function goals (state = [], action) {
     switch(action.type) {
-      case 'ADD_GOAL' :
+      case ADD_GOAL :
         return state.concat([action.goal])
-      case 'REMOVE_GOAL' :
+      case REMOVE_GOAL :
         return state.filter((goal) => goal.id !== action.id)
       default :
         return state
@@ -71,7 +78,7 @@ function createStore (reducer) {
   })
   
   store.dispatch({
-    type: 'ADD_TODO',
+    type: ADD_TODO,
     todo: {
       id: 0,
       name: 'Learn Redux',
