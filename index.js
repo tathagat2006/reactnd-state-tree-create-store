@@ -4,7 +4,9 @@
 //main goal that Redux is trying to offer is predictable state management
 
 
-function createStore() {
+//LIBRARY CODE
+
+function createStore(reducer) {
     //The store should have four parts.
     //1.The state
     //2.Getting the state
@@ -21,9 +23,15 @@ function createStore() {
 
     const getState = () => state
     
+    const dispatch = function(action) {
+        state = reducer(action,state)
+        listeners.forEach(listener => listener())
+    }
+
     return {
         getState,
-        subscribe
+        subscribe,
+        dispatch,
     }
 }
 
@@ -32,3 +40,12 @@ const store = createStore()
 store.subscribe(() => {
     console.log('The user updated the state')
 })
+
+//APP CODE
+function todos(action,state) {
+    if(action.type === 'ADD_TODOS' ) {
+        return state.concat(['action.todo'])
+    }
+
+    return state;
+}
