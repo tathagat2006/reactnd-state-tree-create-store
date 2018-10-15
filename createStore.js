@@ -55,8 +55,16 @@ function createStore (reducer) {
         return state
     }
   }
+
+  //root reducer as createStore can take only one reducer as an arguement.
+  function app(state = {}, action) {
+    return {
+        todos: todos(state.todos,action),//an array of todos
+        goals: goals(state.goals, action),//an array of goals
+    }
+  }
   
-  const store = createStore(todos)
+  const store = createStore(app)
   
   store.subscribe(() => {
     console.log('The new state is: ', store.getState())
