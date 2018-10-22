@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
     <title>Todos Goals</title>
 </head>
 <body>
@@ -27,37 +28,37 @@
       return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
     }
 
-        // Library Code
-function createStore (reducer) {
-    // The store should have four parts
-    // 1. The state
-    // 2. Get the state.
-    // 3. Listen to changes on the state.
-    // 4. Update the state
+//         // Library Code
+// function createStore (reducer) {
+//     // The store should have four parts
+//     // 1. The state
+//     // 2. Get the state.
+//     // 3. Listen to changes on the state.
+//     // 4. Update the state
   
-    let state
-    let listeners = []
+//     let state
+//     let listeners = []
   
-    const getState = () => state
+//     const getState = () => state
   
-    const subscribe = (listener) => {
-      listeners.push(listener)
-      return () => {
-        listeners = listeners.filter((l) => l !== listener)
-      }
-    }
+//     const subscribe = (listener) => {
+//       listeners.push(listener)
+//       return () => {
+//         listeners = listeners.filter((l) => l !== listener)
+//       }
+//     }
   
-    const dispatch = (action) => {
-      state = reducer(state, action)
-      listeners.forEach((listener) => listener())
-    }
+//     const dispatch = (action) => {
+//       state = reducer(state, action)
+//       listeners.forEach((listener) => listener())
+//     }
   
-    return {
-      getState,
-      subscribe,
-      dispatch,
-    }
-  }
+//     return {
+//       getState,
+//       subscribe,
+//       dispatch,
+//     }
+//   }
   
   // App Code
 
@@ -136,7 +137,12 @@ function createStore (reducer) {
     }
   }
   
-  const store = createStore(app)
+  // const store = createStore(app) //Without redux
+  const store = Redux.createStore(app)// with redux but without using redux'x combineReducer function
+  const store = Redux.createStore(Redux.combineReducers({
+    todos,
+    goals,
+  }))
   
   store.subscribe(() => {
     // console.log('The new state is: ', store.getState())
