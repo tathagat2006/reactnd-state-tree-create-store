@@ -124,17 +124,35 @@
     goals: goals(state.goals, action),//an array of goals
   })
 
-  const checkDispatch=(store, action)=> {
-    if(action.type === 'ADD_TODO' && action.todo.name.toLowerCase().includes('bitcoin')) {
-      return alert("Nope! It's not a good idea.")
-    }
+  // const checkDispatch=(store, action)=> {
+  //   if(action.type === 'ADD_TODO' && action.todo.name.toLowerCase().includes('bitcoin')) {
+  //     return alert("Nope! It's not a good idea.")
+  //   }
 
-    if(action.type === 'ADD_GOAL' && action.goal.name.toLowerCase().includes('bitcoin')) {
-      return alert("Nope! It's not a good idea.")
-    }
+  //   if(action.type === 'ADD_GOAL' && action.goal.name.toLowerCase().includes('bitcoin')) {
+  //     return alert("Nope! It's not a good idea.")
+  //   }
 
-    return store.dispatch(action)
+  //   return store.dispatch(action)
     
+  // } NO MORE NEEDED.
+
+  //making redux middleware
+
+  function checker(store) {
+    return function(next) {//either the next middleware in line or dispatch function.
+      return function(action) {
+        if(action.type === 'ADD_TODO' && action.todo.name.toLowerCase().includes('bitcoin')) {
+        return alert("Nope! It's not a good idea.")
+      }
+
+      if(action.type === 'ADD_GOAL' && action.goal.name.toLowerCase().includes('bitcoin')) {
+      return alert("Nope! It's not a good idea.")
+      }
+
+      return next(action)
+        }
+    }
   }
   
   // const store = createStore(app) //Without redux
@@ -142,7 +160,7 @@
   const store = Redux.createStore(Redux.combineReducers({
     todos,
     goals,
-  }))// with redux but using redux'x combineReducer function
+  }),Redux.applyMiddleware(checker))// with redux but using redux'x combineReducer function
   
   store.subscribe(() => {
     // console.log('The new state is: ', store.getState())
@@ -206,7 +224,7 @@ const addTodo=()=> {
     const name = input.value
     input.value = ''
 
-    checkDispatch(store,addTodoAction({
+    store.dispatch(addTodoAction({
         name,
         complete: false,
         id: generateId(),
@@ -218,7 +236,7 @@ const addGoal=()=> {
     const name = input.value
     input.value = ''
 
-    checkDispatch(store,addGoalAction({
+    store.dispatch(addGoalAction({
         name,
         id: generateId(),
     }))
@@ -239,14 +257,14 @@ const addTodoToDOM=(todo)=> {
   const text = document.createTextNode(todo.name)
 
   const removeBtn = createRemoveButton(() => {
-    checkDispatch(store,removeTodoAction(todo.id))
+    store.dispatch(removeTodoAction(todo.id))
   })
 
   node.appendChild(text)
   node.appendChild(removeBtn)
   node.style.textDecoration = todo.complete ? 'line-through':'none'
   node.addEventListener('click', () => {
-    checkDispatch(store,toggleTodoAction(todo.id))
+    store.dispatch(toggleTodoAction(todo.id))
   })
   
   document.getElementById('todos')
@@ -260,7 +278,7 @@ const addGoalToDOM=(goal)=> {
   const text = document.createTextNode(goal.name)
 
   const removeBtn = createRemoveButton(() => {
-    checkDispatch(store,removeGoalAction(goal.id))
+    store.dispatch(removeGoalAction(goal.id))
   })
 
   node.appendChild(text)
