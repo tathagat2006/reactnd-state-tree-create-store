@@ -137,7 +137,7 @@
     
   // } NO MORE NEEDED.
 
-  //making redux middleware
+  //making redux middleware without ES6
 
   function checker(store) {
     return function(next) {//either the next middleware in line or dispatch function.
@@ -153,6 +153,20 @@
       return next(action)
         }
     }
+  }
+
+  // using ES6 to make middleware
+
+  const checker = (store) => (next) => (action) => {
+    if(action.type === 'ADD_TODO' && action.todo.name.toLowerCase().includes('bitcoin')) {
+        return alert("Nope! It's not a good idea.")
+      }
+
+      if(action.type === 'ADD_GOAL' && action.goal.name.toLowerCase().includes('bitcoin')) {
+      return alert("Nope! It's not a good idea.")
+      }
+
+      return next(action)
   }
   
   // const store = createStore(app) //Without redux
