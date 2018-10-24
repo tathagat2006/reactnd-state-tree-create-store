@@ -24,9 +24,7 @@
         </div>
 
     <script type="text/javascript">
-    function generateId () {
-      return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
-    }
+    const generateId = () => Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
 
 //         // Library Code
 // function createStore (reducer) {
@@ -62,49 +60,40 @@
   
   // App Code
 
-  var ADD_TODO  ='ADD_TODO'
-  var REMOVE_TODO  ='REMOVE_TODO'
-  var TOGGLE_TODO  ='TOGGLE_TODO'
-  var ADD_GOAL  ='ADD_GOAL'
-  var REMOVE_GOAL  ='REMOVE_GOAL'
+  const ADD_TODO  ='ADD_TODO'
+  const REMOVE_TODO  ='REMOVE_TODO'
+  const TOGGLE_TODO  ='TOGGLE_TODO'
+  const ADD_GOAL  ='ADD_GOAL'
+  const REMOVE_GOAL  ='REMOVE_GOAL'
 
-  function addTodoAction (todo) {
-    return {
-      type: ADD_TODO,
-      todo,
-    }
-  }
+  const addTodoAction =(todo)=> ({
+  	type: ADD_TODO,
+     todo
+  })
   
-  function removeTodoAction (id) {
-    return {
-      type: REMOVE_TODO,
-      id,
-    }
-  }
+  const removeTodoAction=(id)=> ({
+  	type: REMOVE_TODO,
+    id
+  })
   
-  function toggleTodoAction (id) {
-    return {
-      type: TOGGLE_TODO,
-      id,
-    }
-  }
+  const toggleTodoAction =(id)=> ({
+  	type: TOGGLE_TODO,
+      id
+  })
+      
   
-  function addGoalAction (goal) {
-    return {
-      type: ADD_GOAL,
-      goal,
-    }
-  }
+  const addGoalAction =(goal)=> ({
+  	type: ADD_GOAL,
+	goal
+  })
   
-  function removeGoalAction (id) {
-    return {
-      type: REMOVE_GOAL,
-      id,
-    }
-  }
+  const removeGoalAction =(id)=> ({
+  	type: REMOVE_GOAL,
+	id
+  }) 
   
 
-  function todos (state = [], action) {
+  const todos = (state = [], action) => {
     switch(action.type) {
       case ADD_TODO :
         return state.concat([action.todo])
@@ -118,7 +107,7 @@
     }
   }
   
-  function goals (state = [], action) {
+  const goals = (state = [], action) => {
     switch(action.type) {
       case ADD_GOAL :
         return state.concat([action.goal])
@@ -130,14 +119,12 @@
   }
 
   //root reducer as createStore can take only one reducer as an arguement.
-  function app(state = {}, action) {
-    return {
-        todos: todos(state.todos,action),//an array of todos
-        goals: goals(state.goals, action),//an array of goals
-    }
-  }
+  const app=(state = {}, action)=> ({
+  	todos: todos(state.todos,action),//an array of todos
+    goals: goals(state.goals, action),//an array of goals
+  })
 
-  function checkDispatch(store, action) {
+  const checkDispatch=(store, action)=> {
     if(action.type === 'ADD_TODO' && action.todo.name.toLowerCase().includes('bitcoin')) {
       return alert("Nope! It's not a good idea.")
     }
@@ -214,7 +201,7 @@
 
 //DOM code
 
-function addTodo() {
+const addTodo=()=> {
     const input = document.getElementById('todo')
     const name = input.value
     input.value = ''
@@ -226,7 +213,7 @@ function addTodo() {
     }))
 }
 
-function addGoal() {
+const addGoal=()=> {
     const input = document.getElementById('goal')
     const name = input.value
     input.value = ''
@@ -240,14 +227,14 @@ function addGoal() {
 document.getElementById('todobtn').addEventListener('click',addTodo)
 document.getElementById('goalbtn').addEventListener('click',addGoal)
 
-function createRemoveButton(onClick) {
+const createRemoveButton=(onClick)=> {
   const removeBtn = document.createElement('button')
   removeBtn.innerHTML = 'X'
   removeBtn.addEventListener('click', onClick)
   return removeBtn
 }
 
-function addTodoToDOM(todo) {
+const addTodoToDOM=(todo)=> {
   const node = document.createElement('li')
   const text = document.createTextNode(todo.name)
 
@@ -268,7 +255,7 @@ function addTodoToDOM(todo) {
   
 }
 
-function addGoalToDOM(goal) {
+const addGoalToDOM=(goal)=> {
   const node = document.createElement('li')
   const text = document.createTextNode(goal.name)
 
