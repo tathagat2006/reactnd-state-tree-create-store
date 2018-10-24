@@ -27,6 +27,9 @@
     <button id="goalbtn">Add Goal</button>
     <ul id="goals"></ul>
   </div>
+  
+  <hr/>
+  <div id="app"></div>
 
   <script type="text/javascript">
     const generateId = () => Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
@@ -318,8 +321,21 @@
   </script>
 
   <script type="text/babel">
+    class App extends React.Component {
+      render() {
+        return (
+          <div>
+            APP
+          </div>
+        )
+      }
+    }
 
-    </script>
+    ReactDOM.render(
+      <App/>,
+      document.getElementById('app')
+    )
+  </script>
 
 </body>
 
