@@ -328,7 +328,8 @@ function List(props) {
         <li>
           <span>
             {item.name}  
-          </span>  
+          </span> 
+          <button onClick = {() => props.remove(item)}>X</button> 
         </li>
       ))}
     </ul>
@@ -347,6 +348,10 @@ class Todos extends React.Component {
     id: generateId(),
   }))
 
+  removeItem = (todo) => {
+    this.props.store.dispatch(removeTodoAction(todo.id))
+  }
+
   }
   render() {
     return (
@@ -359,7 +364,9 @@ class Todos extends React.Component {
           />
         <button onClick = {this.addItem}>Add Todo</button>  
 
-        <List items = {this.props.todos}/>
+        <List items = {this.props.todos} 
+              remove = {this.removeItem}
+        />
       </div>
     )
   }
@@ -378,6 +385,9 @@ class Goals extends React.Component {
     name,
   }))
 
+  removeItem = (goal) => {
+    this.props.store.dispatch(removeGoalAction(goal.id))
+  }
   }
   render() {
     return (
@@ -390,7 +400,9 @@ class Goals extends React.Component {
           />
         <button onClick = {this.addItem}>Add Goal</button>
 
-        <List items = {this.props.goals}/>
+        <List items = {this.props.goals} 
+          remove = {this.removeItem}
+        />
       </div>
     )
   }
