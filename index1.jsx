@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+const Context = React.createContext();
+
 function Parent ({ name }) {
   return (
     <div>
@@ -20,12 +22,16 @@ function Child ({ name }) {
 }
 
 function Grandchild ({ name }) {
-  return (
-    <div>
-      <h1>Grandchild</h1>
-      <h3>Name: {name}</h3>
-    </div>
-  );
+    return (
+        <Context.Consumer>
+          {(name) => (
+          <div>
+          <h1>Grandchild</h1>
+          <h3>Name: {name}</h3>
+          </div>
+          )}
+        </Context.Consumer>
+      );
 }
 
 class App extends React.Component {
@@ -33,8 +39,10 @@ class App extends React.Component {
     const name = 'Tyler';
 
     return (
-      <Parent />
-    );
+        <Context.Provider value={name}>
+          <Parent />
+        </Context.Provider>
+        );
   }
 }
 
