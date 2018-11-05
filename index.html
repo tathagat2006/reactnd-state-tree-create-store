@@ -417,6 +417,11 @@ class Goals extends React.Component {
 
   removeItem = (goal) => {
     this.props.store.dispatch(removeGoalAction(goal.id))
+    API.deleteGoal(goal.id)
+      .catch(() => {
+        this.props.store.dispatch(addGoalAction(goal.id))
+        alert('Error ocuured.. Try Again.')
+      })
   }
   }
   render() {
