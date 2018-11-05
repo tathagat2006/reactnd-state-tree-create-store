@@ -324,7 +324,13 @@ const addGoalToDOM = (goal) => {
 function List(props) {
   return(
     <ul>
-      <li>LIST</li>
+      {props.items.map((item) => (
+        <li>
+          <span>
+            {item.name}  
+          </span>  
+        </li>
+      ))}
     </ul>
   )
 }
@@ -353,7 +359,7 @@ class Todos extends React.Component {
           />
         <button onClick = {this.addItem}>Add Todo</button>  
 
-        <List/>
+        <List items = {this.props.todos}/>
       </div>
     )
   }
@@ -384,7 +390,7 @@ class Goals extends React.Component {
           />
         <button onClick = {this.addItem}>Add Goal</button>
 
-        <List/>
+        <List items = {this.props.goals}/>
       </div>
     )
   }
