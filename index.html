@@ -396,10 +396,10 @@ class Todos extends React.Component {
   // }))
 
   removeItem = (todo) => {
-    this.props.store.dispatch(removeTodoAction(todo.id))
+    this.props.dispatch(removeTodoAction(todo.id))
     return API.deleteTodo(todo.id)
       .catch(() => {
-        this.props.store.dispatch(addTodoAction(todo.id))
+        this.props.dispatch(addTodoAction(todo.id))
         alert('An Error occured. Try Again.')
       })
     
@@ -425,12 +425,27 @@ class Todos extends React.Component {
   }
 }
 
+class ConnectedTodos extends React.Component {
+  render() {
+    return (
+      <Context.Consumer>
+        {(store) => {
+          const { todos } = store.getState()
+
+          return <Todos todos= {todos} dispatch = {store.dispatch}/>
+
+        }}
+      </Context.Consumer>
+    )
+  }
+}
+
 class Goals extends React.Component {
   addItem = (e) => {
     e.preventDefault()
     return API.saveGoal(this.input.value)
           .then((goal) => {
-            this.props.store.dispatch(addGoalAction(goal))
+            this.props.dispatch(addGoalAction(goal))
             this.input.value = ''
           })
           .catch(() => alert('There was an error. Try again.'))
@@ -445,10 +460,10 @@ class Goals extends React.Component {
   // }))
 
   removeItem = (goal) => {
-    this.props.store.dispatch(removeGoalAction(goal.id))
+    this.props.dispatch(removeGoalAction(goal.id))
     API.deleteGoal(goal.id)
       .catch(() => {
-        this.props.store.dispatch(addGoalAction(goal.id))
+        this.props.dispatch(addGoalAction(goal.id))
         alert('Error ocuured.. Try Again.')
       })
   }
@@ -486,7 +501,7 @@ class App extends React.Component {
   render() {
 
     const { store } = this.props
-    const { todos , loading } = store.getState()
+    const { loading } = store.getState()
 
     if(loading === true) {
       return <h3>Loading</h3>
@@ -494,8 +509,9 @@ class App extends React.Component {
 
     return (
       <div>
-        <Todos todos = {todos} store = {this.props.store}/>
+        <ConnectedTodos/>
         <ConnectedGoals/>
+
       </div>
     )
   }
