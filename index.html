@@ -327,6 +327,8 @@ const addTodoToDOM = (todo) => {
 
 }
 
+const Context = React.createContext();
+
 const addGoalToDOM = (goal) => {
   const node = document.createElement('li')
   const text = document.createTextNode(goal.name)
@@ -358,6 +360,16 @@ function List(props) {
       ))}
     </ul>
   )
+}
+
+class Provider extends React.Component {
+  render() {
+    return(
+      <Context.Provider value = {this.props.store}>
+        {this.props.children}
+      </Context.Provider>
+    )
+  }
 }
 
 class Todos extends React.Component {
